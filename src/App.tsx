@@ -44,9 +44,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background font-body text-on-surface p-8 md:p-16 max-w-5xl mx-auto">
-      <header className="mb-12 border-b border-outline pb-8">
-        <h1 className="text-4xl md:text-5xl font-headline tracking-tight text-primary uppercase">Puerto Columbo</h1>
-        <p className="text-xs uppercase tracking-[0.2em] text-on-surface-variant mt-3">Sistema de Control Operativo</p>
+      <header className="mb-12 border-b border-outline pb-8 flex items-center gap-6">
+        <img src="https://res.cloudinary.com/djmo7ydpm/image/upload/v1776870967/logo-puerto_2xaaaaaaaaa_olrchx.png" alt="Puerto Columbo Logo" className="h-20 w-auto" />
+        <div>
+          <h1 className="text-4xl md:text-5xl font-headline tracking-tight text-primary uppercase">Puerto Columbo</h1>
+          <p className="text-xs uppercase tracking-[0.2em] text-on-surface-variant mt-3">Sistema de Control Operativo</p>
+        </div>
       </header>
 
       <div className="relative mb-10">
