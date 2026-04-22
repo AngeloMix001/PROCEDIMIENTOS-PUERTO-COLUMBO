@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Georgia:ital,wght@0,400;0,700;1,400&family=Helvetica+Neue:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0A0A0A;
+  --color-surface-bright: #111111;
+  --color-on-background: #E0E0E0;
+  --color-on-tertiary: #FFFFFF;
+  --color-inverse-primary: #333333;
+  --color-tertiary-fixed: #222222;
+  --color-error: #ba1a1a;
+  --color-primary-fixed: #1a1a1a;
+  --color-on-error-container: #ffdad6;
+  --color-inverse-surface: #E0E0E0;
+  --color-outline: rgba(255, 255, 255, 0.1);
+  --color-on-secondary: #000000;
+  --color-on-error: #ffffff;
+  --color-on-tertiary-container: #FFFFFF;
+  --color-surface-container-lowest: #050505;
+  --color-on-secondary-fixed: #FFFFFF;
+  --color-on-primary: #000000;
+  --color-on-surface: #E0E0E0;
+  --color-surface-container-high: #222222;
+  --color-primary-fixed-dim: #333333;
+  --color-primary-container: #111111;
+  --color-tertiary-container: #1a1a1a;
+  --color-surface-dim: #0A0A0A;
+  --color-on-tertiary-fixed-variant: #CCCCCC;
+  --color-surface-container-highest: #333333;
+  --color-tertiary: #FFFFFF;
+  --color-outline-variant: rgba(255, 255, 255, 0.05);
+  --color-error-container: #93000a;
+  --color-primary: #FFFFFF;
+  --color-on-tertiary-fixed: #FFFFFF;
+  --color-surface: #111111;
+  --color-secondary-container: #222222;
+  --color-on-surface-variant: #888888;
+  --color-inverse-on-surface: #111111;
+  --color-tertiary-fixed-dim: #444444;
+  --color-surface-container: #1a1a1a;
+  --color-secondary-fixed-dim: #333333;
+  --color-secondary: #CCCCCC;
+  --color-on-secondary-container: #FFFFFF;
+  --color-on-secondary-fixed-variant: #CCCCCC;
+  --color-on-primary-fixed: #FFFFFF;
+  --color-secondary-fixed: #222222;
+  --color-on-primary-fixed-variant: #CCCCCC;
+  --color-surface-container-low: #0A0A0A;
+  --color-on-primary-container: #FFFFFF;
+  --color-surface-tint: #FFFFFF;
+  --color-surface-variant: #222222;
+
+  --radius-DEFAULT: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-full: 0px;
+
+  --font-headline: "Georgia", serif;
+  --font-body: "Helvetica Neue", Arial, sans-serif;
+  --font-label: "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}

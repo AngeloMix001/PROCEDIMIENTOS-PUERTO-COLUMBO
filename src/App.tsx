@@ -1,0 +1,185 @@
+import React, { useState } from 'react';
+import {
+  FileText,
+  CheckSquare,
+  Folder,
+  Calendar,
+  Eye,
+  Download,
+  Search,
+  ChevronDown,
+  ChevronUp,
+  Building
+} from 'lucide-react';
+
+const proceduresData = [
+  { id: 1, title: "Procedimientos Gate Control", category: "Gate Control", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Verificar...", "Paso 2: Confirmar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862024/Gate_Control_version_001_ukl3jq.docx" },
+  { id: 2, title: "Procedimientos CFS", category: "CFS", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Recepcionar...", "Paso 2: Coordinar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862024/CFS_version_001_d5oi8r.docx" },
+  { id: 3, title: "Procedimientos Almacén Patio", category: "Almacén Patio", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Identificar...", "Paso 2: Segregar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862024/Almac%C3%A9n_Patio_version_001_lafumx.docx" },
+  { id: 4, title: "Procedimientos Control Documentos", category: "Control Documentos", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Activar alarma...", "Paso 2: Evacuar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862024/Control_Documentos_version_002_kxsihk.docx" },
+  { id: 5, title: "Procedimientos Bodega", category: "Bodega", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Iniciar...", "Paso 2: Registrar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862025/Bodega_version_001_qbzlws.docx" },
+];
+
+const checklistsData = [
+  { id: 1, title: "Check List Bodega", category: "Bodega", date: "Versión 001", type: "checklist" as const, steps: ["1. Verificar CFS...", "2. Enviar programación..."], pdfUrl: "https://drive.google.com/file/d/1-o7RkBU63e2kIn9vSeSpJZqkW93GvUZV/view?usp=sharing" },
+  { id: 2, title: "Check List CFS", category: "CFS", date: "Versión 001", type: "checklist" as const, steps: ["1. Recepcionar listado...", "2. Coordinar retiro..."], pdfUrl: "https://drive.google.com/file/d/1gsCL7DzoLyiJZqwHpr8duIoXbn29lM9L/view?usp=sharing" },
+  { id: 3, title: "Check List Gate Control", category: "Gate Control", date: "Versión 001", type: "checklist" as const, steps: ["1. Verificar Gate...", "2. Revisar sello..."], pdfUrl: "https://drive.google.com/file/d/1nCHLAlTD_yMgUqlWfWZOKLnGHYGeuuT_/view?usp=sharing" },
+  { id: 4, title: "Check List Control Documentos", category: "Control Documentos", date: "Versión 002", type: "checklist" as const, steps: ["1. Revisar planificación...", "2. Identificar naves..."], pdfUrl: "https://drive.google.com/file/d/1-xrVViIgY2P66KgbjMSN32g645jepwHB/view?usp=sharing" },
+  { id: 5, title: "Check List Almacén Patio", category: "Almacén Patio", date: "Versión 001", type: "checklist" as const, steps: ["1. Verificar contenedor...", "2. Confirmar contacto..."], pdfUrl: "https://drive.google.com/file/d/1PY0lVHuJwrxyKZY1COBBFh5EjpWC1GZy/view?usp=sharing" },
+];
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState<'procedures' | 'checklists'>('procedures');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredProcedures = proceduresData.filter(item => 
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredChecklists = checklistsData.filter(item => 
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div className="min-h-screen bg-background font-body text-on-surface p-8 md:p-16 max-w-5xl mx-auto">
+      <header className="mb-12 border-b border-outline pb-8">
+        <h1 className="text-4xl md:text-5xl font-headline tracking-tight text-primary uppercase">Puerto Columbo</h1>
+        <p className="text-xs uppercase tracking-[0.2em] text-on-surface-variant mt-3">Sistema de Control Operativo</p>
+      </header>
+
+      <div className="relative mb-10">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
+        <input
+          type="text"
+          placeholder="BUSCAR DOCUMENTOS O CATEGORÍAS..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full bg-transparent border border-outline py-4 pl-12 pr-4 focus:border-primary text-xs uppercase tracking-widest outline-none transition-colors text-primary placeholder:text-on-surface-variant/50"
+        />
+      </div>
+
+      <div className="flex gap-8 mb-10 border-b border-outline">
+        <button
+          className={`pb-4 text-xs md:text-sm uppercase tracking-widest transition-colors ${
+            activeTab === 'procedures' 
+              ? 'text-primary border-b border-primary' 
+              : 'text-on-surface-variant hover:text-primary'
+          }`}
+          onClick={() => setActiveTab('procedures')}
+        >
+          Procedimientos
+        </button>
+        <button
+          className={`pb-4 text-xs md:text-sm uppercase tracking-widest transition-colors ${
+            activeTab === 'checklists' 
+              ? 'text-primary border-b border-primary' 
+              : 'text-on-surface-variant hover:text-primary'
+          }`}
+          onClick={() => setActiveTab('checklists')}
+        >
+          Check Lists
+        </button>
+      </div>
+
+      <main>
+        {activeTab === 'procedures' ? (
+          <List items={filteredProcedures} emptyMessage="No se encontraron procedimientos." />
+        ) : (
+          <List items={filteredChecklists} emptyMessage="No se encontraron check lists." />
+        )}
+      </main>
+    </div>
+  );
+}
+
+function List({ items, emptyMessage }: { items: any[], emptyMessage: string }) {
+  if (items.length === 0) {
+    return (
+      <div className="py-12 text-center text-on-surface-variant text-xs uppercase tracking-widest border border-outline border-dashed">
+        {emptyMessage}
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4 animate-in fade-in duration-500">
+      {items.map(item => (
+        <ItemCard 
+          key={item.id}
+          title={item.title} 
+          category={item.category} 
+          date={item.date} 
+          type={item.type} 
+          steps={item.steps}
+          pdfUrl={item.pdfUrl}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ItemCard({ title, category, date, type, steps, pdfUrl }: { title: string, category: string, date: string, type: 'procedure' | 'checklist', steps?: string[], pdfUrl?: string }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  let Icon = type === 'procedure' ? FileText : CheckSquare;
+  if (title.includes("CFS") && type === 'procedure') {
+    Icon = Building;
+  }
+  
+  return (
+    <div className="group bg-surface border border-outline hover:border-primary transition-all">
+      <div className="p-6 flex flex-col sm:flex-row sm:items-center gap-6">
+        <div className="w-12 h-12 border border-outline flex items-center justify-center text-on-surface-variant bg-surface-container-lowest shrink-0">
+          <Icon className="w-5 h-5" />
+        </div>
+        
+        <div className="flex-1">
+          <h4 className="font-headline text-xl text-primary mb-3">{title}</h4>
+          <div className="flex flex-wrap items-center gap-6 text-[10px] uppercase tracking-widest text-on-surface-variant">
+            <span className="flex items-center gap-2"><Folder className="w-3 h-3" /> {category}</span>
+            <span className="flex items-center gap-2"><Calendar className="w-3 h-3" /> {date}</span>
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-3 mt-4 sm:mt-0">
+          {pdfUrl ? (
+            <a 
+              href={pdfUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" 
+              title="Ver documento"
+            >
+              <Eye className="w-4 h-4" />
+            </a>
+          ) : (
+            <button 
+              className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" 
+              onClick={() => setIsExpanded(!isExpanded)}
+              title={isExpanded ? "Contraer" : "Expandir"}
+            >
+              {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+          )}
+          <button className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" title="Descargar">
+            <Download className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+      
+      {isExpanded && steps && (
+        <div className="px-6 pb-6 pt-0 border-t border-outline animate-in slide-in-from-top-2">
+          <ul className="space-y-2 mt-4 text-sm text-on-surface-variant font-body">
+            {steps.map((step, index) => (
+              <li key={index} className="flex gap-3">
+                <span className="text-primary">{index + 1}.</span>
+                {step}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
