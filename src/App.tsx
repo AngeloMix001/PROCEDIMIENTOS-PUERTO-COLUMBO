@@ -170,7 +170,7 @@ function ItemCard({ title, category, date, type, steps, pdfUrl, onPreview }: { t
         </div>
         
         <div className="flex items-center gap-3 mt-4 sm:mt-0">
-          {pdfUrl ? (
+          {pdfUrl && (
             <button 
               onClick={() => onPreview && onPreview(pdfUrl)}
               className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" 
@@ -178,7 +178,22 @@ function ItemCard({ title, category, date, type, steps, pdfUrl, onPreview }: { t
             >
               <Eye className="w-4 h-4" />
             </button>
-          ) : (
+          )}
+
+          {pdfUrl && (
+            <a 
+              href={pdfUrl}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" 
+              title="Descargar"
+            >
+              <Download className="w-4 h-4" />
+            </a>
+          )}
+
+          {!pdfUrl && (
             <button 
               className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" 
               onClick={() => setIsExpanded(!isExpanded)}
@@ -187,9 +202,7 @@ function ItemCard({ title, category, date, type, steps, pdfUrl, onPreview }: { t
               {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
             </button>
           )}
-          <button className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" title="Descargar">
-            <Download className="w-4 h-4" />
-          </button>
+
         </div>
       </div>
       
