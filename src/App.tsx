@@ -64,7 +64,10 @@ export default function App() {
               Cerrar Vista Previa
             </button>
             <iframe 
-              src={previewUrl.replace('/view', '/preview')} 
+              src={previewUrl.includes('drive.google.com') 
+                ? previewUrl.replace('/view', '/preview') 
+                : `https://docs.google.com/viewer?url=${encodeURIComponent(previewUrl)}&embedded=true`
+              }
               className="w-full h-full mt-10" 
               title="Vista previa del documento"
             />
