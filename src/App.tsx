@@ -31,6 +31,7 @@ const checklistsData = [
 export default function App() {
   const [activeTab, setActiveTab] = useState<'procedures' | 'checklists'>('procedures');
   const [searchQuery, setSearchQuery] = useState('');
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const filteredProcedures = proceduresData.filter(item => 
     item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -51,6 +52,25 @@ export default function App() {
           <p className="text-xs uppercase tracking-[0.2em] text-on-surface-variant mt-3">Sistema de Control Operativo</p>
         </div>
       </header>
+
+      {/* Preview Modal */}
+      {previewUrl && (
+        <div className="fixed inset-0 z-50 bg-background/80 flex items-center justify-center p-4">
+          <div className="bg-surface w-full max-w-4xl h-[80vh] border border-outline p-4 relative">
+            <button 
+              onClick={() => setPreviewUrl(null)} 
+              className="absolute top-2 right-2 px-4 py-2 bg-primary text-on-primary text-xs uppercase"
+            >
+              Cerrar Vista Previa
+            </button>
+            <iframe 
+              src={previewUrl.replace('/view', '/preview')} 
+              className="w-full h-full mt-10" 
+              title="Vista previa del documento"
+            />
+          </div>
+        </div>
+      )}
 
       <div className="relative mb-10">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
@@ -88,16 +108,16 @@ export default function App() {
 
       <main>
         {activeTab === 'procedures' ? (
-          <List items={filteredProcedures} emptyMessage="No se encontraron procedimientos." />
+          <List items={filteredProcedures} emptyMessage="No se encontraron procedimientos." onPreview={(url) => setPreviewUrl(url)} />
         ) : (
-          <List items={filteredChecklists} emptyMessage="No se encontraron check lists." />
+          <List items={filteredChecklists} emptyMessage="No se encontraron check lists." onPreview={(url) => setPreviewUrl(url)} />
         )}
       </main>
     </div>
   );
 }
 
-function List({ items, emptyMessage }: { items: any[], emptyMessage: string }) {
+function List({ items, emptyMessage, onPreview }: { items: any[], emptyMessage: string, onPreview: (url: string) => void }) {
   if (items.length === 0) {
     return (
       <div className="py-12 text-center text-on-surface-variant text-xs uppercase tracking-widest border border-outline border-dashed">
@@ -117,13 +137,14 @@ function List({ items, emptyMessage }: { items: any[], emptyMessage: string }) {
           type={item.type} 
           steps={item.steps}
           pdfUrl={item.pdfUrl}
+          onPreview={onPreview}
         />
       ))}
     </div>
   );
 }
 
-function ItemCard({ title, category, date, type, steps, pdfUrl }: { title: string, category: string, date: string, type: 'procedure' | 'checklist', steps?: string[], pdfUrl?: string }) {
+function ItemCard({ title, category, date, type, steps, pdfUrl, onPreview }: { title: string, category: string, date: string, type: 'procedure' | 'checklist', steps?: string[], pdfUrl?: string, onPreview?: (url: string) => void }) {
   const [isExpanded, setIsExpanded] = useState(false);
   let Icon = type === 'procedure' ? FileText : CheckSquare;
   if (title.includes("CFS") && type === 'procedure') {
@@ -147,15 +168,13 @@ function ItemCard({ title, category, date, type, steps, pdfUrl }: { title: strin
         
         <div className="flex items-center gap-3 mt-4 sm:mt-0">
           {pdfUrl ? (
-            <a 
-              href={pdfUrl} 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <button 
+              onClick={() => onPreview && onPreview(pdfUrl)}
               className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" 
-              title="Ver documento"
+              title="Vista previa"
             >
               <Eye className="w-4 h-4" />
-            </a>
+            </button>
           ) : (
             <button 
               className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" 
@@ -186,3 +205,4 @@ function ItemCard({ title, category, date, type, steps, pdfUrl }: { title: strin
     </div>
   );
 }
+
