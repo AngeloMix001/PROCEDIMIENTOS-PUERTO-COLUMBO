@@ -44,24 +44,24 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-background font-body text-on-surface p-8 md:p-16 max-w-5xl mx-auto">
-      <header className="mb-12 border-b border-outline pb-8 flex items-center gap-6">
-        <img src="https://res.cloudinary.com/djmo7ydpm/image/upload/v1776870967/logo-puerto_2xaaaaaaaaa_olrchx.png" alt="Puerto Columbo Logo" className="h-20 w-auto" />
+    <div className="min-h-screen bg-background font-body text-on-surface p-4 sm:p-8 md:p-12 max-w-5xl mx-auto">
+      <header className="mb-8 sm:mb-12 border-b border-outline pb-6 sm:pb-8 flex items-center gap-4 sm:gap-6">
+        <img src="https://res.cloudinary.com/djmo7ydpm/image/upload/v1776870967/logo-puerto_2xaaaaaaaaa_olrchx.png" alt="Puerto Columbo Logo" className="h-16 sm:h-20 w-auto" />
         <div>
-          <h1 className="text-4xl md:text-5xl font-headline tracking-tight text-primary uppercase">Puerto Columbo VALPARAÍSO</h1>
-          <p className="text-xs uppercase tracking-[0.2em] text-on-surface-variant mt-3">Sistema de Control Operativo</p>
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-headline tracking-tight text-primary uppercase">Puerto Columbo VALPARAÍSO</h1>
+          <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-on-surface-variant mt-1 sm:mt-3">Sistema de Control Operativo</p>
         </div>
       </header>
 
       {/* Preview Modal */}
       {previewUrl && (
-        <div className="fixed inset-0 z-50 bg-background/80 flex items-center justify-center p-4">
-          <div className="bg-surface w-full max-w-4xl h-[80vh] border border-outline p-4 relative">
+        <div className="fixed inset-0 z-50 bg-background/80 flex items-center justify-center p-2 sm:p-4">
+          <div className="bg-surface w-full max-w-4xl h-[80vh] border border-outline p-2 sm:p-4 relative">
             <button 
               onClick={() => setPreviewUrl(null)} 
-              className="absolute top-2 right-2 px-4 py-2 bg-primary text-on-primary text-xs uppercase"
+              className="absolute top-2 right-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-primary text-on-primary text-[10px] sm:text-xs uppercase"
             >
-              Cerrar Vista Previa
+              Cerrar
             </button>
             <iframe 
               src={previewUrl.includes('drive.google.com') 
