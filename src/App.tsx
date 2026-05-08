@@ -18,6 +18,7 @@ const proceduresData = [
   { id: 3, title: "Procedimientos Almacén Patio", category: "Almacén Patio", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Identificar...", "Paso 2: Segregar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862024/Almac%C3%A9n_Patio_version_001_lafumx.docx" },
   { id: 4, title: "Procedimientos Control Documentos", category: "Control Documentos", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Activar alarma...", "Paso 2: Evacuar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862024/Control_Documentos_version_002_kxsihk.docx" },
   { id: 5, title: "Procedimientos Bodega", category: "Bodega", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Iniciar...", "Paso 2: Registrar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862025/Bodega_version_001_qbzlws.docx" },
+  { id: 6, title: "Procedimientos Bodega - CMPC", category: "Bodega", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Recepción documental", "Paso 2: Inspección física", "Paso 3: Almacenamiento"], pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
 ];
 
 const checklistsData = [
@@ -26,6 +27,7 @@ const checklistsData = [
   { id: 3, title: "Check List Gate Control", category: "Gate Control", date: "Versión 001", type: "checklist" as const, steps: ["1. Verificar Gate...", "2. Revisar sello..."], pdfUrl: "https://drive.google.com/file/d/1nCHLAlTD_yMgUqlWfWZOKLnGHYGeuuT_/view?usp=sharing" },
   { id: 4, title: "Check List Control Documentos", category: "Control Documentos", date: "Versión 002", type: "checklist" as const, steps: ["1. Revisar planificación...", "2. Identificar naves..."], pdfUrl: "https://drive.google.com/file/d/1-xrVViIgY2P66KgbjMSN32g645jepwHB/view?usp=sharing" },
   { id: 5, title: "Check List Almacén Patio", category: "Almacén Patio", date: "Versión 001", type: "checklist" as const, steps: ["1. Verificar contenedor...", "2. Confirmar contacto..."], pdfUrl: "https://drive.google.com/file/d/1PY0lVHuJwrxyKZY1COBBFh5EjpWC1GZy/view?usp=sharing" },
+  { id: 6, title: "Check List Bodega - CMPC", category: "Bodega - CMPC", date: "Versión 001", type: "checklist" as const, steps: ["1. Verificar documentación CMPC", "2. Revisar sellos de seguridad", "3. Control de inventario"], pdfUrl: "" },
 ];
 
 export default function App() {
@@ -66,7 +68,9 @@ export default function App() {
             <iframe 
               src={previewUrl.includes('drive.google.com') 
                 ? previewUrl.replace('/view', '/preview') 
-                : `https://docs.google.com/viewer?url=${encodeURIComponent(previewUrl)}&embedded=true`
+                : previewUrl.includes('docs.google.com')
+                  ? previewUrl.split('/edit')[0] + '/preview'
+                  : `https://docs.google.com/viewer?url=${encodeURIComponent(previewUrl)}&embedded=true`
               }
               className="w-full h-full mt-10" 
               title="Vista previa del documento"
