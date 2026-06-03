@@ -19,6 +19,8 @@ const proceduresData = [
   { id: 4, title: "Procedimientos Control Documentos", category: "Control Documentos", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Activar alarma...", "Paso 2: Evacuar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862024/Control_Documentos_version_002_kxsihk.docx" },
   { id: 5, title: "Procedimientos Bodega", category: "Bodega", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Iniciar...", "Paso 2: Registrar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862025/Bodega_version_001_qbzlws.docx" },
   { id: 6, title: "Procedimientos Bodega - CMPC", category: "Bodega", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Recepción documental", "Paso 2: Inspección física", "Paso 3: Almacenamiento"], pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+  { id: 7, title: "Procedimiento Acuerdos Comerciales", category: "Área Comercial", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Recepción y análisis de requerimientos del cliente para el acuerdo comercial", "Paso 2: Definición de tarifas, plazos, condiciones de pago and volumen proyectado", "Paso 3: Confección del borrador del acuerdo y validación jurídica/operativa", "Paso 4: Firma del acuerdo comercial, registro en el sistema y difusión a operaciones"], pdfUrl: "https://docs.google.com/document/d/1xyS6JuMp4xgBxDzdZXTepsz8BEzcfugF/edit?usp=sharing" },
+  { id: 8, title: "Procedimiento Customer Service", category: "Customer Service", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Recepción de requerimientos de clientes", "Paso 2: Verificación de factibilidad comercial y operativa", "Paso 3: Elaboración, validación y envío de oferta/cotización", "Paso 4: Confirmación del servicio y registro en sistema de control operativo"], pdfUrl: "https://docs.google.com/document/d/1hlLfLAFa637Znrt8oycVwLO1o_2KDM3L/edit?usp=sharing" },
 ];
 
 const checklistsData = [
@@ -28,6 +30,8 @@ const checklistsData = [
   { id: 4, title: "Check List Control Documentos", category: "Control Documentos", date: "Versión 002", type: "checklist" as const, steps: ["1. Revisar planificación...", "2. Identificar naves..."], pdfUrl: "https://drive.google.com/file/d/1-xrVViIgY2P66KgbjMSN32g645jepwHB/view?usp=sharing" },
   { id: 5, title: "Check List Almacén Patio", category: "Almacén Patio", date: "Versión 001", type: "checklist" as const, steps: ["1. Verificar contenedor...", "2. Confirmar contacto..."], pdfUrl: "https://drive.google.com/file/d/1PY0lVHuJwrxyKZY1COBBFh5EjpWC1GZy/view?usp=sharing" },
   { id: 6, title: "Check List Bodega - CMPC", category: "Bodega - CMPC", date: "Versión 001", type: "checklist" as const, steps: ["En proceso..."], pdfUrl: "https://drive.google.com/file/d/1u1jqAsxIMBhnPhhZLoeiBxzoABwiNFeF/view?usp=sharing" },
+  { id: 7, title: "Check List Área Comercial", category: "Área Comercial", date: "Versión 001", type: "checklist" as const, steps: ["En proceso..."], pdfUrl: "https://drive.google.com/file/d/1cPx-MXcLaV1XbuFXkIvry3JNwM20xUjN/view?usp=sharing" },
+  { id: 8, title: "Check List Customer Service", category: "Customer Service", date: "Versión 001", type: "checklist" as const, steps: ["En proceso..."], pdfUrl: "" },
 ];
 
 export default function App() {
@@ -151,7 +155,7 @@ function List({ items, emptyMessage, onPreview }: { items: any[], emptyMessage: 
   );
 }
 
-function ItemCard({ title, category, date, type, steps, pdfUrl, onPreview }: { title: string, category: string, date: string, type: 'procedure' | 'checklist', steps?: string[], pdfUrl?: string, onPreview?: (url: string) => void }) {
+function ItemCard({ title, category, date, type, steps, pdfUrl, onPreview }: { key?: React.Key, title: string, category: string, date: string, type: 'procedure' | 'checklist', steps?: string[], pdfUrl?: string, onPreview?: (url: string) => void }) {
   const [isExpanded, setIsExpanded] = useState(false);
   let Icon = type === 'procedure' ? FileText : CheckSquare;
   if (title.includes("CFS") && type === 'procedure') {
