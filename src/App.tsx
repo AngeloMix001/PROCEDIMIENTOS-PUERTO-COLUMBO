@@ -27,15 +27,15 @@ const proceduresData = [
     isFolder: true,
     badge: "CARPETA DE PROCEDIMIENTOS & FICHAS",
     subItems: [
-      { id: "c1", title: "CMPC - PROCESO OPERACIONAL", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
-      { id: "c2", title: "CMPC - PROCESO PLANIFICACION DE CONSOLIDADOS", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
-      { id: "c3", title: "CMPC - PROCESO RECEPCION DE CARGA DE PRODUCTOS", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
-      { id: "c4", title: "CMPC - PROCESO ALMACENAMIENTO DE LA CARGA", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
-      { id: "c5", title: "CMPC - PROCESO PICKING DE CARGA", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
-      { id: "c6", title: "CMPC - PROCESO CONSOLIDACION DE LA CARGA", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
-      { id: "c7", title: "CMPC - PROCESO DESPACHO DE CONTENEDOR", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
-      { id: "c8", title: "CMPC - PROCESO LIQUIDACION DE EMBARQUE", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
-      { id: "c9", title: "CMPC - PROCEDIMIENTO OPERACIONES", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+      { id: "default-1", title: "CMPC - Proceso Operacional", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1hwMHfc-LtSWlQmyw95_vlw6RWBTA-U4S/edit?usp=sharing&ouid=115558709160216474718&rtpof=true&sd=true" },
+      { id: "default-2", title: "CMPC - Proceso Planificacion de Consolidados", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1hcH1x2WwGFGUTQApYfL-Cyu9K3lJHa7y/edit?usp=sharing&ouid=115558709160216474718&rtpof=true&sd=true" },
+      { id: "default-3", title: "CMPC - Proceso Recepcion de carga de productos", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1q3CK7_HAvrokRjn4tZu6FYDHq3a2mWgk/edit?usp=sharing&ouid=115558709160216474718&rtpof=true&sd=true" },
+      { id: "default-4", title: "CMPC - Proceso Almacenamiento de la carga", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1iexYGXFjj5fqGlIrAyIEkTtHi5puvovu/edit?usp=sharing&ouid=115558709160216474718&rtpof=true&sd=true" },
+      { id: "default-5", title: "CMPC - Proceso Picking de  carga", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1Cj4a4iwTtt-7dzooBDPTZTfEvxWbmtK7/edit?usp=sharing&ouid=115558709160216474718&rtpof=true&sd=true" },
+      { id: "default-6", title: "CMPC - Proceso Consolidacion de la carga", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1WNVASqmJ5YuuInoTje9l2xIoOReudewG/edit?usp=sharing&ouid=115558709160216474718&rtpof=true&sd=true" },
+      { id: "default-7", title: "CMPC - Proceso Despacho de Contenedor", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1MR7Fwm2p6JdkZPCxsy8JyRSb0hqf3OOi/edit?usp=sharing&ouid=115558709160216474718&rtpof=true&sd=true" },
+      { id: "default-8", title: "CMPC - Proceso Liquidacion de embarque", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1l_tcGAfw7lWUBAXVOA3aROUmXPKmmjXE/edit?usp=sharing&ouid=115558709160216474718&rtpof=true&sd=true" },
+      { id: "default-9", title: "CMPC - Procedimiento Operaciones", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1EX4QZ2jsYFboBcof2bQNj24mGU4Ni-Gl/edit?usp=sharing&ouid=115558709160216474718&rtpof=true&sd=true" },
     ]
   },
   { id: 7, title: "Procedimiento Acuerdos Comerciales", category: "Área Comercial", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Recepción y análisis de requerimientos del cliente para el acuerdo comercial", "Paso 2: Definición de tarifas, plazos, condiciones de pago and volumen proyectado", "Paso 3: Confección del borrador del acuerdo y validación jurídica/operativa", "Paso 4: Firma del acuerdo comercial, registro en el sistema y difusión a operaciones"], pdfUrl: "https://docs.google.com/document/d/1xyS6JuMp4xgBxDzdZXTepsz8BEzcfugF/edit?usp=sharing" },
@@ -48,9 +48,8 @@ const checklistsData = [
   { id: 3, title: "Check List Gate Control", category: "Gate Control", date: "Versión 001", type: "checklist" as const, steps: ["1. Verificar Gate...", "2. Revisar sello..."], pdfUrl: "https://drive.google.com/file/d/1nCHLAlTD_yMgUqlWfWZOKLnGHYGeuuT_/view?usp=sharing" },
   { id: 4, title: "Check List Control Documentos", category: "Control Documentos", date: "Versión 002", type: "checklist" as const, steps: ["1. Revisar planificación...", "2. Identificar naves..."], pdfUrl: "https://drive.google.com/file/d/1-xrVViIgY2P66KgbjMSN32g645jepwHB/view?usp=sharing" },
   { id: 5, title: "Check List Almacén Patio", category: "Almacén Patio", date: "Versión 001", type: "checklist" as const, steps: ["1. Verificar contenedor...", "2. Confirmar contacto..."], pdfUrl: "https://drive.google.com/file/d/1PY0lVHuJwrxyKZY1COBBFh5EjpWC1GZy/view?usp=sharing" },
-  { id: 6, title: "Check List Bodega - CMPC", category: "Bodega - CMPC", date: "Versión 001", type: "checklist" as const, steps: ["En proceso..."], pdfUrl: "https://drive.google.com/file/d/1u1jqAsxIMBhnPhhZLoeiBxzoABwiNFeF/view?usp=sharing" },
-  { id: 7, title: "Check List Área Comercial", category: "Área Comercial", date: "Versión 001", type: "checklist" as const, steps: ["En proceso..."], pdfUrl: "https://drive.google.com/file/d/1cPx-MXcLaV1XbuFXkIvry3JNwM20xUjN/view?usp=sharing" },
-  { id: 8, title: "Check List Customer Service", category: "Customer Service", date: "Versión 001", type: "checklist" as const, steps: ["En proceso..."], pdfUrl: "" },
+  { id: 6, title: "Check List Bodega - CMPC", category: "Bodega - CMPC", date: "Versión 001", type: "checklist" as const, pdfUrl: "https://drive.google.com/file/d/1u1jqAsxIMBhnPhhZLoeiBxzoABwiNFeF/view?usp=sharing" },
+  { id: 7, title: "Check List Customer Service", category: "Customer Service", date: "Versión 001", type: "checklist" as const, pdfUrl: "https://drive.google.com/file/d/1cPx-MXcLaV1XbuFXkIvry3JNwM20xUjN/view?usp=sharing" },
 ];
 
 export default function App() {
