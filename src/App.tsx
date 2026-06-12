@@ -18,7 +18,26 @@ const proceduresData = [
   { id: 3, title: "Procedimientos Almacén Patio", category: "Almacén Patio", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Identificar...", "Paso 2: Segregar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862024/Almac%C3%A9n_Patio_version_001_lafumx.docx" },
   { id: 4, title: "Procedimientos Control Documentos", category: "Control Documentos", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Activar alarma...", "Paso 2: Evacuar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862024/Control_Documentos_version_002_kxsihk.docx" },
   { id: 5, title: "Procedimientos Bodega", category: "Bodega", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Iniciar...", "Paso 2: Registrar..."], pdfUrl: "https://res.cloudinary.com/djmo7ydpm/raw/upload/v1776862025/Bodega_version_001_qbzlws.docx" },
-  { id: 6, title: "Procedimientos Bodega - CMPC", category: "Bodega", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Recepción documental", "Paso 2: Inspección física", "Paso 3: Almacenamiento"], pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+  { 
+    id: 6, 
+    title: "Procedimientos CMPC", 
+    category: "CMPC", 
+    date: "Actual", 
+    type: "procedure" as const, 
+    isFolder: true,
+    badge: "CARPETA DE PROCEDIMIENTOS & FICHAS",
+    subItems: [
+      { id: "c1", title: "CMPC - PROCESO OPERACIONAL", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+      { id: "c2", title: "CMPC - PROCESO PLANIFICACION DE CONSOLIDADOS", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+      { id: "c3", title: "CMPC - PROCESO RECEPCION DE CARGA DE PRODUCTOS", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+      { id: "c4", title: "CMPC - PROCESO ALMACENAMIENTO DE LA CARGA", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+      { id: "c5", title: "CMPC - PROCESO PICKING DE CARGA", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+      { id: "c6", title: "CMPC - PROCESO CONSOLIDACION DE LA CARGA", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+      { id: "c7", title: "CMPC - PROCESO DESPACHO DE CONTENEDOR", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+      { id: "c8", title: "CMPC - PROCESO LIQUIDACION DE EMBARQUE", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+      { id: "c9", title: "CMPC - PROCEDIMIENTO OPERACIONES", date: "Actual", pdfUrl: "https://docs.google.com/document/d/1frjFcwdNHnNQJLQymPAJ13fli4GECJvZ/edit?usp=sharing" },
+    ]
+  },
   { id: 7, title: "Procedimiento Acuerdos Comerciales", category: "Área Comercial", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Recepción y análisis de requerimientos del cliente para el acuerdo comercial", "Paso 2: Definición de tarifas, plazos, condiciones de pago and volumen proyectado", "Paso 3: Confección del borrador del acuerdo y validación jurídica/operativa", "Paso 4: Firma del acuerdo comercial, registro en el sistema y difusión a operaciones"], pdfUrl: "https://docs.google.com/document/d/1xyS6JuMp4xgBxDzdZXTepsz8BEzcfugF/edit?usp=sharing" },
   { id: 8, title: "Procedimiento Customer Service", category: "Customer Service", date: "Actual", type: "procedure" as const, steps: ["Paso 1: Recepción de requerimientos de clientes", "Paso 2: Verificación de factibilidad comercial y operativa", "Paso 3: Elaboración, validación y envío de oferta/cotización", "Paso 4: Confirmación del servicio y registro en sistema de control operativo"], pdfUrl: "https://docs.google.com/document/d/1hlLfLAFa637Znrt8oycVwLO1o_2KDM3L/edit?usp=sharing" },
 ];
@@ -41,7 +60,8 @@ export default function App() {
 
   const filteredProcedures = proceduresData.filter(item => 
     item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+    item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (item.subItems && item.subItems.some(sub => sub.title.toLowerCase().includes(searchQuery.toLowerCase())))
   );
 
   const filteredChecklists = checklistsData.filter(item => 
@@ -149,19 +169,141 @@ function List({ items, emptyMessage, onPreview }: { items: any[], emptyMessage: 
           steps={item.steps}
           pdfUrl={item.pdfUrl}
           onPreview={onPreview}
+          isFolder={item.isFolder}
+          badge={item.badge}
+          subItems={item.subItems}
         />
       ))}
     </div>
   );
 }
 
-function ItemCard({ title, category, date, type, steps, pdfUrl, onPreview }: { key?: React.Key, title: string, category: string, date: string, type: 'procedure' | 'checklist', steps?: string[], pdfUrl?: string, onPreview?: (url: string) => void }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+function ItemCard({ 
+  title, 
+  category, 
+  date, 
+  type, 
+  steps, 
+  pdfUrl, 
+  onPreview,
+  isFolder,
+  badge,
+  subItems 
+}: { 
+  key?: React.Key;
+  title: string; 
+  category: string; 
+  date: string; 
+  type: 'procedure' | 'checklist'; 
+  steps?: string[]; 
+  pdfUrl?: string; 
+  onPreview?: (url: string) => void; 
+  isFolder?: boolean;
+  badge?: string;
+  subItems?: { id: string | number; title: string; date: string; pdfUrl?: string }[];
+}) {
+  const [isExpanded, setIsExpanded] = useState(isFolder ? true : false);
   let Icon = type === 'procedure' ? FileText : CheckSquare;
   if (title.includes("CFS") && type === 'procedure') {
     Icon = Building;
   }
   
+  if (isFolder && subItems) {
+    return (
+      <div className={`bg-surface border transition-all ${isExpanded ? 'border-primary' : 'border-outline hover:border-primary'}`}>
+        <div className="p-6 flex flex-col sm:flex-row sm:items-center gap-6">
+          <div className="w-12 h-12 border border-outline flex items-center justify-center text-primary bg-surface-container-lowest shrink-0">
+            <Folder className="w-5 h-5 text-primary" />
+          </div>
+          
+          <div className="flex-1">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
+              <h4 className="font-headline text-xl text-primary font-normal">{title}</h4>
+              {badge && (
+                <span className="inline-flex items-center bg-[#E5EEF9] text-[#003B6F] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider">
+                  {badge}
+                </span>
+              )}
+            </div>
+            <div className="flex flex-wrap items-center gap-6 text-[10px] uppercase tracking-widest text-on-surface-variant">
+              <span className="flex items-center gap-2"><Folder className="w-3 h-3" /> {category}</span>
+              <span className="flex items-center gap-2"><Calendar className="w-3 h-3" /> {date}</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3 mt-4 sm:mt-0">
+            <button 
+              className="p-3 border border-outline text-primary hover:bg-surface-container-highest transition-colors" 
+              onClick={() => setIsExpanded(!isExpanded)}
+              title={isExpanded ? "Contraer" : "Expandir"}
+            >
+              {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+        
+        {isExpanded && (
+          <div className="px-6 pb-6 pt-6 border-t border-outline bg-background animate-in slide-in-from-top-2">
+            {/* Folder Subheader */}
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4 pb-2 border-b border-outline gap-2">
+              <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-primary font-bold">
+                <Folder className="w-4 h-4 text-primary" />
+                <span>PROCEDIMIENTOS & FICHAS DE PROCEDIMIENTOS CMPC</span>
+              </div>
+              <span className="bg-[#ECE6F0] text-[#49454E] text-[10px] px-2 py-0.5 uppercase tracking-wider font-semibold self-start sm:self-auto">
+                {subItems.length} DOCUMENTO(S)
+              </span>
+            </div>
+
+            {/* Sub-items List */}
+            <div className="space-y-3">
+              {subItems.map((sub, idx) => (
+                <div 
+                  key={sub.id || idx} 
+                  className="bg-surface border border-outline hover:border-primary p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 border border-outline flex items-center justify-center text-primary bg-surface-container-lowest shrink-0">
+                      <FileText className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h5 className="font-headline text-sm font-bold text-primary uppercase">{sub.title}</h5>
+                      <p className="text-[10px] text-on-surface-variant uppercase tracking-widest mt-0.5">{sub.date}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 mt-2 sm:mt-0">
+                    {sub.pdfUrl && (
+                      <button 
+                        onClick={() => onPreview && onPreview(sub.pdfUrl!)}
+                        className="p-2.5 border border-outline text-primary hover:bg-surface-container-highest transition-colors flex items-center justify-center" 
+                        title="Vista previa"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </button>
+                    )}
+                    {sub.pdfUrl && (
+                      <a 
+                        href={sub.pdfUrl}
+                        download
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2.5 border border-outline text-primary hover:bg-surface-container-highest transition-colors flex items-center justify-center" 
+                        title="Descargar"
+                      >
+                        <Download className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div className="group bg-surface border border-outline hover:border-primary transition-all">
       <div className="p-6 flex flex-col sm:flex-row sm:items-center gap-6">
