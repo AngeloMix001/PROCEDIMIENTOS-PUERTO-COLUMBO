@@ -62,7 +62,10 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-          <p>© {currentYear} Puerto Columbo S.A. Todos los derechos reservados. Sede Valparaíso, Chile.</p>
+          <div className="text-center sm:text-left">
+            <p>© {currentYear} Puerto Columbo S.A. Todos los derechos reservados. Sede Valparaíso, Chile.</p>
+            <p className="mt-1 text-slate-400 font-medium">Creado por Ángel Gutiérrez González by Rela Solutions</p>
+          </div>
           <p className="flex items-center gap-2">
             <span>Sistema de Control Operativo VAP</span>
             <span>•</span>

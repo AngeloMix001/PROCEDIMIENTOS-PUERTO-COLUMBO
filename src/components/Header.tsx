@@ -1,13 +1,14 @@
 import { motion } from 'motion/react';
-import { ShieldCheck, FileText, CheckSquare, Layers, Clock } from 'lucide-react';
+import { ShieldCheck, FileText, CheckSquare, Layers, Clock, Workflow } from 'lucide-react';
 
 interface HeaderProps {
   proceduresCount: number;
   checklistsCount: number;
   cmpcCount: number;
+  flowchartsCount: number;
 }
 
-export function Header({ proceduresCount, checklistsCount, cmpcCount }: HeaderProps) {
+export function Header({ proceduresCount, checklistsCount, cmpcCount, flowchartsCount }: HeaderProps) {
   return (
     <header className="relative bg-gradient-to-b from-[#002244] via-[#003B6F] to-[#002E59] text-white border-b border-sky-950/40 shadow-xl">
       {/* Subtle background glow effect */}
@@ -87,7 +88,17 @@ export function Header({ proceduresCount, checklistsCount, cmpcCount }: HeaderPr
               </div>
             </div>
 
-            <div className="hidden sm:flex items-center gap-3 px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 backdrop-blur-md">
+            <div className="flex items-center gap-3 px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 backdrop-blur-md">
+              <div className="p-2 rounded-lg bg-purple-500/20 text-purple-300">
+                <Workflow className="w-4 h-4" />
+              </div>
+              <div className="text-left">
+                <div className="text-xs font-bold text-white">{flowchartsCount}</div>
+                <div className="text-[10px] text-purple-200 uppercase tracking-wider">Flujogramas</div>
+              </div>
+            </div>
+
+            <div className="hidden lg:flex items-center gap-3 px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 backdrop-blur-md">
               <div className="p-2 rounded-lg bg-amber-500/20 text-amber-300">
                 <Layers className="w-4 h-4" />
               </div>
@@ -103,3 +114,4 @@ export function Header({ proceduresCount, checklistsCount, cmpcCount }: HeaderPr
     </header>
   );
 }
+
