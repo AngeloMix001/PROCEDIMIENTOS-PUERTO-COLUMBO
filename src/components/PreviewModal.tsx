@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ExternalLink, Download, Copy, Check, FileText, Loader2 } from 'lucide-react';
+import { X, ExternalLink, Download, Copy, Check, FileText, Loader2, Printer } from 'lucide-react';
+import { OfficialDocumentViewer } from './OfficialDocumentViewer';
+import { downloadOfficialDocument, PTS_SGI_009_DATA } from '../data/officialDocumentContent';
 
 interface PreviewModalProps {
   url: string | null;
@@ -14,6 +16,10 @@ interface PreviewModalProps {
 export function PreviewModal({ url, title, category, code, onClose, onToast }: PreviewModalProps) {
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const isInternalDoc = 
+    Boolean(code && (code.includes('PTS-SGI-009') || code.includes('PTS- SGI-009'))) ||
+    Boolean(url && (url.includes('pts-sgi-009') || url.startsWith('#doc-')));
 
   useEffect(() => {
     setIsLoading(true);
@@ -41,13 +47,27 @@ export function PreviewModal({ url, title, category, code, onClose, onToast }: P
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(url);
-    setCopied(true);
-    onToast('Enlace copiado al portapapeles');
+    if (isInternalDoc) {
+      navigator.clipboard.writeText(`${window.location.origin}/#pts-sgi-009`);
+      setCopied(true);
+      onToast('Enlace de procedimiento copiado al portapapeles');
+    } else {
+      navigator.clipboard.writeText(url);
+      setCopied(true);
+      onToast('Enlace copiado al portapapeles');
+    }
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const embedUrl = getEmbedUrl(url);
+  const handleDownloadInternal = (e: React.MouseEvent) => {
+    if (isInternalDoc) {
+      e.preventDefault();
+      downloadOfficialDocument(PTS_SGI_009_DATA);
+      onToast('Descargando documento oficial PTS-SGI-009');
+    }
+  };
+
+  const embedUrl = isInternalDoc ? '' : getEmbedUrl(url);
 
   return (
     <AnimatePresence>
@@ -104,28 +124,50 @@ export function PreviewModal({ url, title, category, code, onClose, onToast }: P
                 <span>{copied ? 'Copiado' : 'Copiar'}</span>
               </button>
 
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Abrir en pestaña externa"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/15 transition-colors cursor-pointer"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">Abrir en Pestaña</span>
-              </a>
+              {!isInternalDoc ? (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Abrir en pestaña externa"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/15 transition-colors cursor-pointer"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">Abrir en Pestaña</span>
+                </a>
+              ) : (
+                <button
+                  onClick={() => window.print()}
+                  title="Imprimir documento"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/15 transition-colors cursor-pointer"
+                >
+                  <Printer className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">Imprimir</span>
+                </button>
+              )}
 
-              <a
-                href={url}
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Descargar archivo"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold shadow-xs transition-colors cursor-pointer"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">Descargar</span>
-              </a>
+              {isInternalDoc ? (
+                <button
+                  onClick={handleDownloadInternal}
+                  title="Descargar archivo oficial"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold shadow-xs transition-colors cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">Descargar</span>
+                </button>
+              ) : (
+                <a
+                  href={url}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Descargar archivo"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold shadow-xs transition-colors cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">Descargar</span>
+                </a>
+              )}
 
               <div className="h-6 w-px bg-white/20 mx-1" />
 
@@ -139,26 +181,32 @@ export function PreviewModal({ url, title, category, code, onClose, onToast }: P
             </div>
           </div>
 
-          {/* Document Viewer Frame */}
-          <div className="relative flex-1 bg-slate-100 overflow-hidden">
-            {isLoading && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-100 z-10">
-                <Loader2 className="w-8 h-8 text-[#003B6F] animate-spin mb-2" />
-                <p className="text-xs text-slate-500 font-medium tracking-wide">
-                  Cargando vista previa oficial del documento...
-                </p>
-              </div>
+          {/* Document Content */}
+          <div className="relative flex-1 bg-slate-100 overflow-hidden flex flex-col">
+            {isInternalDoc ? (
+              <OfficialDocumentViewer onToast={onToast} />
+            ) : (
+              <>
+                {isLoading && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-100 z-10">
+                    <Loader2 className="w-8 h-8 text-[#003B6F] animate-spin mb-2" />
+                    <p className="text-xs text-slate-500 font-medium tracking-wide">
+                      Cargando vista previa oficial del documento...
+                    </p>
+                  </div>
+                )}
+                <iframe
+                  src={embedUrl}
+                  onLoad={() => setIsLoading(false)}
+                  className="w-full h-full border-0"
+                  title={`Vista previa - ${title}`}
+                />
+              </>
             )}
-            <iframe
-              src={embedUrl}
-              onLoad={() => setIsLoading(false)}
-              className="w-full h-full border-0"
-              title={`Vista previa - ${title}`}
-            />
           </div>
 
           {/* Footer bar */}
-          <div className="px-5 py-2.5 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
+          <div className="px-5 py-2.5 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between shrink-0">
             <span className="truncate">
               Puerto Columbo Valparaíso • Repositorio Documental Seguro
             </span>

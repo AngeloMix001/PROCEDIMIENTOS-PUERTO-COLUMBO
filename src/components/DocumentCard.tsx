@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { 
   FileText, 
@@ -18,6 +18,7 @@ import {
   Layers
 } from 'lucide-react';
 import { DocumentItem } from '../types';
+import { downloadOfficialDocument, PTS_SGI_009_DATA } from '../data/officialDocumentContent';
 
 interface DocumentCardProps {
   key?: string | number;
@@ -45,12 +46,26 @@ export function DocumentCard({ item, index, onPreview, onToast }: DocumentCardPr
 
   const IconComponent = getDepartmentIcon(item.category, item.title);
 
+  const isInternal = Boolean(item.pdfUrl?.startsWith('#') || item.code?.includes('PTS-SGI-009'));
+
   const handleCopyLink = () => {
     if (!item.pdfUrl) return;
-    navigator.clipboard.writeText(item.pdfUrl);
+    if (isInternal) {
+      navigator.clipboard.writeText(`${window.location.origin}/#${item.code?.toLowerCase().replace(/\s+/g, '-')}`);
+    } else {
+      navigator.clipboard.writeText(item.pdfUrl);
+    }
     setCopied(true);
     onToast(`Enlace copiado: ${item.title}`);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownload = (e: React.MouseEvent) => {
+    if (isInternal) {
+      e.preventDefault();
+      downloadOfficialDocument(PTS_SGI_009_DATA);
+      onToast(`Descargando documento oficial: ${item.title}`);
+    }
   };
 
   const formatTag = item.fileType?.toUpperCase() || (item.pdfUrl?.includes('docx') ? 'DOCX' : 'PDF');
@@ -129,17 +144,28 @@ export function DocumentCard({ item, index, onPreview, onToast }: DocumentCardPr
             )}
 
             {item.pdfUrl && (
-              <a
-                href={item.pdfUrl}
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
-                title="Descargar o abrir documento"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">Descargar</span>
-              </a>
+              isInternal ? (
+                <button
+                  onClick={handleDownload}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer"
+                  title="Descargar documento oficial"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">Descargar</span>
+                </button>
+              ) : (
+                <a
+                  href={item.pdfUrl}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                  title="Descargar o abrir documento"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">Descargar</span>
+                </a>
+              )
             )}
 
             {item.pdfUrl && (

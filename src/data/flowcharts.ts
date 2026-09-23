@@ -696,5 +696,126 @@ export const flowchartsData: FlowchartItem[] = [
       { id: "c-doc-5", from: "doc-pago-contado", to: "doc-emision-factura" },
       { id: "c-doc-6", from: "doc-emision-factura", to: "doc-pase-salida" }
     ]
+  },
+  {
+    id: "fc-sgi-009",
+    code: "DF-SGI-009",
+    title: "Diagrama de Flujo: Operación de Maquinaria y Movilización de Carga",
+    category: "Equipos y Maquinarias",
+    description: "Flujo operativo del procedimiento PTS-SGI-009: inicio de turno, Check List preoperacional obligatorio, coordinación con Control Room, Bodega, CFS y Patio, ejecución de movimientos y cierre de turno.",
+    version: "Versión Oficial 000 (2026)",
+    estimatedTime: "Turno completo / ciclo según faena",
+    lanes: [
+      { id: "lane-supervision", name: "Control Room / Supervisión (Bodega/CFS/Patio)", color: "#003B6F", role: "Planificación Operativa", y: 30, height: 130 },
+      { id: "lane-operador", name: "Operador de Maquinaria", color: "#D97706", role: "Ejecución de Movimientos", y: 180, height: 140 },
+      { id: "lane-taller", name: "Taller / Mantenimiento", color: "#DC2626", role: "Soporte Técnico", y: 340, height: 130 },
+    ],
+    nodes: [
+      {
+        id: "maq-start",
+        label: "Inicio de Turno",
+        role: "Operador Maquinaria",
+        type: "start",
+        description: "Asignación de máquina y toma de posesión del equipo al inicio del turno de trabajo.",
+        x: 60,
+        y: 215,
+        inputs: ["Asignación de equipo (grúa horquilla / reach stacker)"],
+        outputs: ["Operador en máquina asignada"],
+        sla: "Inmediato"
+      },
+      {
+        id: "maq-checklist",
+        label: "Check List Preoperacional",
+        role: "Operador Maquinaria",
+        type: "task",
+        description: "Inspección obligatoria de fluidos, frenos, neumáticos, sistema hidráulico y registro de observaciones.",
+        x: 270,
+        y: 215,
+        inputs: ["Máquina asignada", "Pauta de chequeo"],
+        outputs: ["Check List firmado con observaciones"],
+        sla: "10 min"
+      },
+      {
+        id: "maq-dec-operativa",
+        label: "¿Máquina Operativa?",
+        role: "Operador Maquinaria",
+        type: "decision",
+        description: "Evaluación de fallas críticas de seguridad o advertencias en panel instrumental.",
+        x: 480,
+        y: 215,
+        inputs: ["Resultados de inspección"],
+        outputs: ["Aprobación de uso", "Alerta de falla"],
+        sla: "2 min"
+      },
+      {
+        id: "maq-falla-reporte",
+        label: "Reportar Anomalía a Taller",
+        role: "Taller Mantención",
+        type: "task",
+        description: "Ingreso de la máquina a revisión técnica y solicitud de equipo de respaldo.",
+        x: 480,
+        y: 375,
+        inputs: ["Check List con novedades críticas"],
+        outputs: ["Orden de trabajo correctiva"],
+        sla: "15 min"
+      },
+      {
+        id: "maq-coordinacion",
+        label: "Coordinación con Supervisión",
+        role: "Control Room / Supervisión",
+        type: "task",
+        description: "Recepción de directrices para organizar movimientos de carga (bodegas, CFS, patio o gate).",
+        x: 700,
+        y: 65,
+        inputs: ["Planificación diaria de faenas"],
+        outputs: ["Instrucciones de movilización"],
+        sla: "Constante"
+      },
+      {
+        id: "maq-movilizacion",
+        label: "Ejecución de Movimientos",
+        role: "Operador Maquinaria",
+        type: "subprocess",
+        description: "Movilización segura de contenedores, pallets, carga suelta y mercancías según requerimiento.",
+        x: 920,
+        y: 215,
+        inputs: ["Directrices operativas", "Zona asignada"],
+        outputs: ["Carga recepcionada, organizada o despachada"],
+        sla: "Según faena"
+      },
+      {
+        id: "maq-cierre",
+        label: "Cierre de Turno y Estacionamiento",
+        role: "Operador Maquinaria",
+        type: "task",
+        description: "Estacionamiento de la maquinaria en lugares designados y reporte de cualquier anomalía.",
+        x: 1140,
+        y: 215,
+        inputs: ["Término de jornada"],
+        outputs: ["Máquina estacionada en zona segura"],
+        sla: "10 min"
+      },
+      {
+        id: "maq-entrega-relevo",
+        label: "Entrega al Siguiente Operador",
+        role: "Operador Maquinaria",
+        type: "end",
+        description: "Traspaso de novedades y continuidad operativa asegurada para el siguiente turno.",
+        x: 1360,
+        y: 215,
+        inputs: ["Reporte de turno"],
+        outputs: ["Continuidad operativa garantizada"],
+        sla: "Inmediato"
+      }
+    ],
+    connections: [
+      { id: "c-maq-1", from: "maq-start", to: "maq-checklist" },
+      { id: "c-maq-2", from: "maq-checklist", to: "maq-dec-operativa" },
+      { id: "c-maq-3", from: "maq-dec-operativa", to: "maq-coordinacion", label: "Sí (Conforme)", condition: "yes" },
+      { id: "c-maq-4", from: "maq-dec-operativa", to: "maq-falla-reporte", label: "No (Falla detectada)", condition: "no" },
+      { id: "c-maq-5", from: "maq-coordinacion", to: "maq-movilizacion" },
+      { id: "c-maq-6", from: "maq-movilizacion", to: "maq-cierre" },
+      { id: "c-maq-7", from: "maq-cierre", to: "maq-entrega-relevo" }
+    ]
   }
 ];

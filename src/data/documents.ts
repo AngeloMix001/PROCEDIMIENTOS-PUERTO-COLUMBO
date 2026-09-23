@@ -160,6 +160,23 @@ export const proceduresData: DocumentItem[] = [
     ],
     pdfUrl: "https://drive.google.com/file/d/1HuAHU9PP_oQFbvqDt6mG8pTGQ8u8Y6H8/view?usp=sharing" 
   },
+  { 
+    id: "proc-10", 
+    code: "PTS-SGI-009",
+    title: "Procedimiento Operador Maquinaria", 
+    category: "Equipos y Maquinarias", 
+    date: "23-09-2026 • Versión 000", 
+    type: "procedure",
+    fileType: "pdf",
+    description: "Estandarizar las actividades para movilizar todo tipo de material considerado como carga o contenedor que por su peso y tamaño no puede ser manipulado manualmente. El propósito es recepcionar, organizar y despachar contenedores, pallets, carga suelta o mercancías, garantizando faenas expeditas y seguras dentro de las bodegas o en patio.",
+    steps: [
+      "5.2.1 Inicio de Turno: Al iniciar el turno, verificar obligatoriamente el estado de la máquina asignada, realizar Check List con todas las observaciones y mantener comunicación constante con Control Room, Coordinador Bodega, Supervisor CFS, Gate Control y Almacén Patio para planificar las faenas.",
+      "5.2.2 Ejecución de Movimientos: Proceder a movilizar las diversas cargas y mercancías (contenedor, pallets, carga suelta, etc.) según el requerimiento específico de la operación y atender requerimientos de manera eficiente.",
+      "5.2.3 Cierre de Turno: Estacionar la maquinaria en los lugares designados, reportando cualquier anomalía detectada durante el turno para asegurar la continuidad del siguiente operador.",
+      "6. Aspectos Adicionales: Estar atento y concentrado a indicaciones de carga, descarga, recepción y despacho, realizando todas las labores de manera segura para la carga y el entorno de trabajo."
+    ],
+    pdfUrl: "#doc-pts-sgi-009"
+  },
 ];
 
 export const checklistsData: DocumentItem[] = [
